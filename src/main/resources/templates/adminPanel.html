@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" th:href="@{myStyle.css}"/>
+</head>
+
+<body>
+<div style="margin-bottom: 20px; background-color: darkorange; padding-left: 10px; padding-bottom: 20px; padding-top: 20px;">
+    <a href="/" style="text-decoration: none; font-size: 30px; font-weight: bold; color: white; display:inline-block; ">Technical Shop</a>
+
+    <form th:action="@{/}" method="post" style="display: inline-block; margin-left: 20px;">
+        <!--/*@thymesVar id="search" type="templates"*/-->
+        <input name="search" th:value="${search}" placeholder="ноутбук, телефон, asus..."/><button type="submit" style="background-color: white">Поиск</button>
+    </form>
+</div>
+
+<a href="addProduct">Add Product</a>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Info</th>
+        <th>Characteristics</th>
+        <th>Cost</th>
+        <th>Tags</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each ="product : ${products}">
+        <td th:utext="${product.id}">...</td>
+        <td th:utext="${product.title}">...</td>
+        <td th:utext="${product.info}">...</td>
+        <td th:utext="${product.getCharacteristicsString}">...</td>
+        <td th:utext="${product.cost}">...</td>
+        <td th:utext="${product.getTagsString}">...</td>
+        <td> <a th:href="@{'/deletePage?id=' + ${product.id}}">Удалить</a> </td>
+    </tr>
+</table>
+
+</body>
+
+</html>
+

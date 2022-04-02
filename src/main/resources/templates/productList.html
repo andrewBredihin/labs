@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Product List</title>
+    <link rel="stylesheet" th:href="@{myStyle.css}"/>
+</head>
+<body>
+
+<div style="margin-bottom: 20px; background-color: darkorange; padding-left: 10px; padding-bottom: 20px; padding-top: 20px;">
+    <a href="/" style="text-decoration: none; font-size: 30px; font-weight: bold; color: white; display:inline-block; ">Technical Shop</a>
+
+    <form th:action="@{/}" method="post" style="display: inline-block; margin-left: 20px;">
+        <!--/*@thymesVar id="search" type="templates"*/-->
+        <input name="search" th:value="${search}" placeholder="ноутбук, телефон, asus..."/><button type="submit" style="background-color: white">Поиск</button>
+    </form>
+</div>
+
+<div th:each ="product : ${products}" style=" margin:10px; padding: 10px; width:800px; background-color: white">
+    <a th:href="@{'/productPage?id=' + ${product.id}}" th:utext="${product.getTitleAndCharacteristics}" style="text-decoration: none; font-size: 20px; display:inline-block; word-break: break-all; color: black;"></a>
+</div>
+
+</body>
+</html>

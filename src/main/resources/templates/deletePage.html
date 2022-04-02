@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+</head>
+<body>
+
+<form th:action="@{/deletePage}" method="post">
+    <h1>Удалить товар?</h1>
+    <div>
+        <button type="submit" th:value="${id}" name="yes" style="display: inline-block">Да</button>
+        <button type="submit" name="no" style="display: inline-block">Нет</button>
+    </div>
+</form>
+
+</body>
+</html>

@@ -13,8 +13,10 @@
         <!--/*@thymesVar id="search" type="templates"*/-->
         <input name="search" th:value="${search}" placeholder="ноутбук, телефон, asus..."/><button type="submit" style="background-color: white">Поиск</button>
     </form>
-
-    <a href="/adminPanel" style="text-decoration: none; font-size: 30px; color: white; display:inline-block; text-align: right;">Вход</a>
+    
+    <!--/*@thymesVar id="user" type="templates"*/-->
+    <!--/*@thymesVar id="href" type="templates"*/-->
+    <a th:href="${href}" th:utext="${user}" style="text-decoration: none; font-size: 30px; color: white; display:inline-block; text-align: right;"></a>
 </div>
 <!--
 

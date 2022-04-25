@@ -21,10 +21,9 @@ public class CustomUserDetailsSecurityConfig extends WebSecurityConfigurerAdapte
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .authorizeRequests()
-                    .antMatchers("/adminPanel").authenticated()
+                    .antMatchers("/adminPanel").hasAnyRole("ADMIN")
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()

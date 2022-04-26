@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -25,6 +25,11 @@
     <h3 th:utext="'Характеристики: ' + ${product.characteristicsString}">Characteristics</h3>
 
     <h3 th:utext="'Цена: ' + ${product.cost}">Cost</h3>
+
+    <form th:action="@{/productPage}" method="post" style="display: inline-block; margin-left: 20px;">
+        <!--/*@thymesVar id="inBasketText" type="templates"*/-->
+        <button name="addProduct" th:value="${product.id}" sec:authorize="hasRole('ROLE_USER')" type="submit">В корзину</button>
+    </form>
 </div>
 
 <div th:value="${product}" style=" margin:20px; padding: 10px; width:80%; background-color: white">

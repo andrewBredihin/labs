@@ -4,21 +4,27 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+//Класс ользователя
 @Document(collection = "users")
 public class User {
 
+    //id
     @Id
     private long id;
 
+    //Имя
     @Field(value = "username")
     private String username;
 
+    //Почта
     @Field(value = "email")
     private String email;
 
+    //Пароль
     @Field(value = "password")
     private String password;
 
+    //Права доступа
     @Field(value = "authorities")
     private String[] authorities;
 

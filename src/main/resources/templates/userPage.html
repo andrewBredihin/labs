@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" th:href="@{myStyle.css}"/>
 </head>
 <body>
+<div style="margin-bottom: 20px; background-color: darkorange; padding-left: 10px; padding-bottom: 20px; padding-top: 20px;">
+    <a href="/" style="text-decoration: none; font-size: 30px; font-weight: bold; color: white; display:inline-block; ">Technical Shop</a>
+
+    <form th:action="@{/}" method="post" style="display: inline-block; margin-left: 20px;">
+        <!--/*@thymesVar id="search" type="templates"*/-->
+        <input name="search" th:value="${search}" placeholder="ноутбук, телефон, asus..."/><button type="submit" style="background-color: white">Поиск</button>
+    </form>
+
+    <form th:action="@{/logout}" method="post" style="display: inline-block; margin-left: 20px;">
+        <button type="submit">Выход</button>
+    </form>
+    <a href="/adminPanel" sec:authorize="hasRole('ROLE_ADMIN')" style="text-decoration: none; font-size: 30px; color: white; display:inline-block; text-align: right;">Управление</a>
+</div>
+<!--
+
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+
+   -->
+
+<div th:each ="product : ${products}" style=" margin:10px; padding: 10px; width:800px; background-color: white ">
+    <a th:href="@{'/productPage?id=' + ${product.id}}" th:utext="${product.getTitleAndCharacteristics}" style="text-decoration: none; font-size: 20px; display:inline-block; word-break: break-all; color: black;"></a>
+    <form th:action="@{/userPage}" method="post" style="display: inline-block; margin-left: 20px;">
+        <button name="deleteProductButton" th:value="${product.id}">Удалить</button>
+    </form>
+</div>
 
 </body>
+
 </html>

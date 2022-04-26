@@ -1,11 +1,17 @@
 package com.bav.testproject;
 
+import com.bav.testproject.basket.BasketRepository;
+import com.bav.testproject.basket.CustomBasketRepository;
+import com.bav.testproject.basket.ProductOnBasket;
 import com.bav.testproject.database.Product;
 import com.bav.testproject.database.ProductForm;
 import com.bav.testproject.database.ProductRepository;
 import com.bav.testproject.database.ProductRepositoryCustom;
+import com.bav.testproject.users.MongoUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,22 +24,30 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    //Интерфейсы с запросами к БД
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
     private ProductRepositoryCustom productRepositoryCustom;
 
-    //Загрузка стартовой страницы - отображение всех объектов из БД
+    @Autowired
+    private BasketRepository basketRepository;
+
+    @Autowired
+    private CustomBasketRepository customBasketRepository;
+
+    //Загрузка стартовой страницы
     @RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request) {
+        //Отображение всех объектов из БД
         List<Product> products = this.productRepository.findAll();
-
         model.addAttribute("products", products);
 
+        //Вход или переход на страницу пользователя
         String username = "Вход";
         String href = "/login";
+
+        //Если пользователь вошел в систему - перенаправляем на страницу пользователя
         if (request.getUserPrincipal() != null){
             username = request.getUserPrincipal().getName();
             href = "/userPage";
@@ -61,10 +75,42 @@ public class MainController {
 
     //Страница товара
     @RequestMapping(value = { "/productPage"}, method = RequestMethod.GET)
-    public String productPage(@RequestParam(name = "id", defaultValue = "") String id, Model model) {
+    public String productPage(@RequestParam(name = "id", defaultValue = "") String id,
+                              Model model,
+                              HttpServletRequest request) {
         Product product = this.productRepository.findById(Long.parseLong(id));
         model.addAttribute("product", product);
+
+        //Отображение кнопки "В корзину"
+        String toBasketText = "";
+        //Если пользователь вошел в систему - отображаем кнопку
+        if (request.getUserPrincipal() != null)
+            toBasketText = "В корзину";
+        model.addAttribute("toBasketText", toBasketText);
         return "productPage";
+    }
+
+    //Страница товара - добавление в корзину
+    @RequestMapping(value = { "/productPage"}, method = RequestMethod.POST)
+    public String productPagePost(@RequestParam(name = "addProduct", defaultValue = "") String id,
+                                  RedirectAttributes redirectAttributes,
+                                  Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MongoUserDetails user = (MongoUserDetails)authentication.getPrincipal();
+        long userId = user.getUser().getId();
+        long productId = Long.parseLong(id);
+
+        ProductOnBasket product = new ProductOnBasket();
+        product.setId(customBasketRepository.getMaxId() + 1);
+        product.setUserId(userId);
+        product.setProductId(productId);
+
+        //Проверка на наличие товара в корзине: если товар отсутствует - добавляем его в БД
+        if (!customBasketRepository.checkProductOnBasket(userId, productId))
+            basketRepository.insert(product);
+
+        redirectAttributes.addAttribute("id", id);
+        return "redirect:/productPage";
     }
 
     //Переход на страницу добавления объекта в БД
@@ -85,6 +131,7 @@ public class MainController {
         String cost = productForm.getCost();
         String tags = productForm.getTags();
 
+        //Проверка на заполненность полей
         if (title != "" && info != "" && characteristics != "" && cost != "" && tags != ""){
             Product product;
             long id = this.productRepositoryCustom.getMaxId() + 1;
@@ -109,6 +156,7 @@ public class MainController {
     //Загрузка панели администратора
     @RequestMapping(value = { "/adminPanel" }, method = RequestMethod.GET)
     public String adminPanelGet(Model model) {
+        //Вывод всех товаров в виде таблицы
         List<Product> products = this.productRepository.findAll();
         model.addAttribute("products", products);
         return "adminPanel";
@@ -144,6 +192,26 @@ public class MainController {
     //Страница пользователя
     @RequestMapping(value = { "/userPage" }, method = RequestMethod.GET)
     public String userPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MongoUserDetails user = (MongoUserDetails)authentication.getPrincipal();
+        long userId = user.getUser().getId();
+        //Получаем список товаров из корзины пользователя
+        List<Product> products = this.productRepositoryCustom.findFromBasket(userId);
+        model.addAttribute("products", products);
+
         return "userPage";
+    }
+    //Удаление товара из корзины
+    @RequestMapping(value = { "/userPage" }, method = RequestMethod.POST)
+    public String userPagePost(@RequestParam(name = "deleteProductButton", defaultValue = "") String id, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MongoUserDetails user = (MongoUserDetails)authentication.getPrincipal();
+        long userId = user.getUser().getId();
+        long productId = Long.parseLong(id);
+
+        long basketId = basketRepository.findByUserIdAndProductId(userId, productId).getId();
+        basketRepository.deleteById(basketId);
+
+        return "redirect:/userPage";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+//Настройка авторизации и безопасности
 @Configuration
 @EnableWebSecurity
 public class CustomUserDetailsSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,7 +32,8 @@ public class CustomUserDetailsSecurityConfig extends WebSecurityConfigurerAdapte
                         .permitAll()
                 .and()
                     .logout()
-                    .permitAll();
+                        .logoutSuccessUrl("/index")
+                        .permitAll();
     }
 
 }

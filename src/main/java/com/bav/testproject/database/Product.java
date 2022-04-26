@@ -6,25 +6,31 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.Arrays;
 
-//Объект БД
+//Продукты магазина
 @Document(collection = "products")
 public class Product {
 
+    //id
     @Id
     private long id;
 
+    //название товара
     @Field(value = "title")
     private String title;
 
+    //Информация о товаре
     @Field(value = "info")
     private String info;
 
+    //Характеристики продукта
     @Field(value = "characteristics")
     private String[] characteristics;
 
+    //Цена продукта
     @Field(value = "cost")
     private String cost;
 
+    //Теги (для поиска)
     @Field(value = "tags")
     private String[] tags;
 

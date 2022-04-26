@@ -1,5 +1,7 @@
 package com.bav.testproject.database;
 
+import com.bav.testproject.basket.BasketRepository;
+import com.bav.testproject.basket.ProductOnBasket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -7,6 +9,7 @@ import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //Настраиваемые запросы к БД
@@ -16,6 +19,10 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Autowired
+    private BasketRepository basketRepository;
+
+    @Override
     public long getMaxId() {
         Query query = new Query().with(Sort.by(Sort.Direction.DESC, "id"));
         query.limit(1);
@@ -41,5 +48,16 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         BasicQuery basicQuery = new BasicQuery(criteria);
 
         return mongoTemplate.find(basicQuery, Product.class);
+    }
+
+    @Override
+    public List<Product> findFromBasket(long userId) {
+        List<Product> products = new ArrayList<>();
+
+        List<ProductOnBasket> list = basketRepository.findAllByUserId(userId);
+        for (ProductOnBasket x : list)
+            products.add(mongoTemplate.findById(x.getProductId(), Product.class));
+
+        return products;
     }
 }

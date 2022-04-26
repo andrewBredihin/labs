@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+//Поиск пользователя по имени
 @Component
 public class CustomerUserDetailsService implements UserDetailsService {
 

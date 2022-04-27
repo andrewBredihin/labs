@@ -1,4 +1,4 @@
-package com.bav.testproject.basket;
+package com.bav.testproject.repository;
 
 //Настраиваемый репозиторий для продуктов в корзинах пользователей
 public interface CustomBasketRepository {

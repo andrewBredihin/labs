@@ -1,4 +1,6 @@
-package com.bav.testproject.database;
+package com.bav.testproject.repository;
+
+import com.bav.testproject.entity.Product;
 
 import java.util.List;
 

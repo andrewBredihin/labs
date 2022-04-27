@@ -1,7 +1,9 @@
-package com.bav.testproject.database;
+package com.bav.testproject.repository;
 
-import com.bav.testproject.basket.BasketRepository;
-import com.bav.testproject.basket.ProductOnBasket;
+import com.bav.testproject.entity.Product;
+import com.bav.testproject.repository.BasketRepository;
+import com.bav.testproject.entity.ProductOnBasket;
+import com.bav.testproject.repository.ProductRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Registration</title>
+</head>
+<body>
+<h1>Registration:</h1>
+
+<!--
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+   -->
+
+<!--/*@thymesVar id="productForm" type="java"*/-->
+<form th:action="@{/registration}"
+      th:object="${userForm}" method="POST">
+    Username:
+    <input type="text" th:field="*{username}" minlength="5" />
+    <br/>
+    Email:
+    <input type="text" th:field="*{email}" minlength="10" />
+    <br/>
+    Password:
+    <input type="text" th:field="*{password}" minlength="5" />
+    <br/>
+    Confirm password:
+    <input type="text" th:field="*{passwordConfirm}" minlength="5" />
+    <br/>
+    <input type="submit" value="Registration" />
+</form>
+
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<!--/*@thymesVar id="errorMessage" type="ch"*/-->
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+    ...
+</div>
+
+</body>
+</html>

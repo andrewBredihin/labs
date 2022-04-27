@@ -1,5 +1,6 @@
-package com.bav.testproject.users;
+package com.bav.testproject.entity;
 
+import org.springframework.boot.convert.DataSizeUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -41,6 +42,10 @@ public class User {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {

@@ -1,5 +1,6 @@
-package com.bav.testproject.basket;
+package com.bav.testproject.repository;
 
+import com.bav.testproject.entity.ProductOnBasket;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

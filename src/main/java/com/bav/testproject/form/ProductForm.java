@@ -1,4 +1,4 @@
-package com.bav.testproject.database;
+package com.bav.testproject.form;
 
 //Форма для добавления нового товара в БД
 public class ProductForm {

@@ -1,5 +1,6 @@
-package com.bav.testproject.users;
+package com.bav.testproject;
 
+import com.bav.testproject.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

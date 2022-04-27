@@ -1,5 +1,6 @@
-package com.bav.testproject.database;
+package com.bav.testproject.repository;
 
+import com.bav.testproject.entity.Product;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 //Запросы к БД для товаров магазина

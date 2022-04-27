@@ -1,15 +1,14 @@
-package com.bav.testproject;
+package com.bav.testproject.controller;
 
-import com.bav.testproject.basket.BasketRepository;
-import com.bav.testproject.basket.CustomBasketRepository;
-import com.bav.testproject.basket.ProductOnBasket;
-import com.bav.testproject.database.Product;
-import com.bav.testproject.database.ProductForm;
-import com.bav.testproject.database.ProductRepository;
-import com.bav.testproject.database.ProductRepositoryCustom;
-import com.bav.testproject.users.MongoUserDetails;
+import com.bav.testproject.repository.BasketRepository;
+import com.bav.testproject.repository.CustomBasketRepository;
+import com.bav.testproject.entity.ProductOnBasket;
+import com.bav.testproject.entity.Product;
+import com.bav.testproject.form.ProductForm;
+import com.bav.testproject.repository.ProductRepository;
+import com.bav.testproject.repository.ProductRepositoryCustom;
+import com.bav.testproject.MongoUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@SpringBootTest
 @Controller
 public class MainController {
 

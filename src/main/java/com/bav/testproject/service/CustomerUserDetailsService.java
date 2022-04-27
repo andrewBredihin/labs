@@ -1,5 +1,8 @@
-package com.bav.testproject.users;
+package com.bav.testproject.service;
 
+import com.bav.testproject.repository.UserRepository;
+import com.bav.testproject.MongoUserDetails;
+import com.bav.testproject.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

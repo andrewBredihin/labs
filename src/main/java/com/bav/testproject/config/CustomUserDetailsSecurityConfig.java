@@ -1,5 +1,6 @@
-package com.bav.testproject.users;
+package com.bav.testproject.config;
 
+import com.bav.testproject.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,5 +36,4 @@ public class CustomUserDetailsSecurityConfig extends WebSecurityConfigurerAdapte
                         .logoutSuccessUrl("/index")
                         .permitAll();
     }
-
 }

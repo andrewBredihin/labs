@@ -1,6 +1,7 @@
-package com.bav.testproject.repository;
+package com.bav.testproject.repository.impl;
 
 import com.bav.testproject.entity.ProductOnBasket;
+import com.bav.testproject.repository.BasketRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -9,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomBasketRepositoryImpl implements CustomBasketRepository {
+public class BasketRepositoryCustomImpl implements BasketRepositoryCustom {
 
     @Autowired
     private MongoTemplate mongoTemplate;

@@ -1,4 +1,4 @@
-package com.bav.testproject.repository;
+package com.bav.testproject.repository.impl;
 
 import com.bav.testproject.entity.Product;
 import com.bav.testproject.repository.BasketRepository;

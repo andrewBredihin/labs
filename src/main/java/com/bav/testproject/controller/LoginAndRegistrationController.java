@@ -2,7 +2,7 @@ package com.bav.testproject.controller;
 
 import com.bav.testproject.form.UserForm;
 import com.bav.testproject.entity.User;
-import com.bav.testproject.repository.CustomUserRepository;
+import com.bav.testproject.repository.UserRepositoryCustom;
 import com.bav.testproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 //Контроллер страницы регистрации
 @Controller
-public class RegistrationController {
+public class LoginAndRegistrationController {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private CustomUserRepository customUserRepository;
+    private UserRepositoryCustom customUserRepository;
 
     private static final String REGISTRATION = "registration";
+
+    //Страница login
+    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
 
     //Создание и заполнение формы пользователя
     @RequestMapping(value = { "/registration" }, method = RequestMethod.GET)

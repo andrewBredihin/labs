@@ -1,6 +1,7 @@
-package com.bav.testproject.repository;
+package com.bav.testproject.repository.impl;
 
 import com.bav.testproject.entity.User;
+import com.bav.testproject.repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -8,7 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class CustomUserRepositoryImpl implements CustomUserRepository{
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     @Autowired
     private MongoTemplate mongoTemplate;

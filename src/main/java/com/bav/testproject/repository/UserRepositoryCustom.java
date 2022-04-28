@@ -2,7 +2,7 @@ package com.bav.testproject.repository;
 
 
 //Настраиваемый репозиторий пользователя
-public interface CustomUserRepository {
+public interface UserRepositoryCustom {
 
     long getMaxId();
 }

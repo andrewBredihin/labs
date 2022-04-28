@@ -9,4 +9,5 @@ public interface UserRepository extends MongoRepository<User, Long> {
     //Поиск по имени
     User findByUsername(String username);
     User findByEmail(String email);
+    User findById(long id);
 }

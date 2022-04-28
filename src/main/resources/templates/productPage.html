@@ -16,9 +16,6 @@
     </form>
 </div>
 
-<!--/*@thymesVar id="id" type="templates"*/-->
-<h1 th:utext="${id}"></h1>
-
 <div th:value="${product}" style=" margin:20px; padding: 10px; width:80%; background-color: white">
     <h2 th:utext="${product.title}">Title</h2>
 
@@ -27,13 +24,30 @@
     <h3 th:utext="'Цена: ' + ${product.cost}">Cost</h3>
 
     <form th:action="@{/productPage}" method="post" style="display: inline-block; margin-left: 20px;">
-        <!--/*@thymesVar id="inBasketText" type="templates"*/-->
         <button name="addProduct" th:value="${product.id}" sec:authorize="hasRole('ROLE_USER')" type="submit">В корзину</button>
     </form>
 </div>
 
 <div th:value="${product}" style=" margin:20px; padding: 10px; width:80%; background-color: white">
     <h3 th:utext="'Описание: ' + ${product.info}">Info</h3>
+</div>
+
+<form th:action="@{/productPageNewMessage}" method="post" sec:authorize="hasRole('ROLE_USER')" style="display: inline-block; margin-left: 20px;">
+    <div style="padding: 10px; width:80%; background-color: white ">
+        <!--/*@thymesVar id="message" type="templates"*/-->
+        <textarea name="message" th:value="${message}" cols="40" rows="3" style="resize: none"></textarea>
+        <button name="productId" th:value="${productId}" type="submit">Оставить комментарий</button>
+    </div>
+</form>
+
+<div style="margin: 20px 20px 30px;padding: 10px; width:80%; background-color: white ">
+    <h3>Комментарии</h3>
+</div>
+
+<div th:each ="comment : ${comments}" style="margin:20px; padding: 10px; width:80%; background-color: white ">
+    <h2 th:utext="${comment.getUsername()}" style="text-decoration: none; font-size: 24px; display:inline-block; word-break: break-all; color: black;"></h2>
+    </br>
+    <h3 th:utext="${comment.getMessage()}" style="text-decoration: none; font-size: 20px; display:inline-block; word-break: break-all; color: black;"></h3>
 </div>
 
 </body>
